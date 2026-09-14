@@ -25,7 +25,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_14_140126) do
   end
 
   create_table "teas", force: :cascade do |t|
-    t.string "category"
+    t.string "category", default: [], array: true
     t.datetime "created_at", null: false
     t.string "flavor_primary"
     t.string "name_en"
