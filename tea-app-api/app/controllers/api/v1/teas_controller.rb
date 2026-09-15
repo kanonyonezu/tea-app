@@ -5,6 +5,12 @@ class Api::V1::TeasController < ApplicationController
     render json: @teas.order(name_en: :asc)
   end
 
+  def show
+    @tea = Tea.find(params[:id])
+    render json: @tea
+  end
+
+  # this is not needed
   def recommendation
     @tea_request = TeaRequest.new(tea_params)
     if @tea_request.save

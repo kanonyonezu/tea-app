@@ -52,3 +52,5 @@ end
 
 # add-ons
 gem "devise"
+gem 'devise-jwt'
+gem 'dotenv-rails'
