@@ -98,6 +98,43 @@ Generates tea recommendations based on the user's stated preferences.
 ```
  
 ---
+
+## GET `/api/v1/recommendations/:id`
+ 
+Returns the tea(s) associated with a given recommendation ID.
+ 
+**Headers**
+ 
+| Key | Value |
+|-----|-------|
+| Authorization | `Bearer <JWT_TOKEN>` |
+ 
+**Example**
+ 
+`GET /api/v1/recommendations/1`
+ 
+**Response**
+ 
+```json
+[
+  {
+    "id": 1,
+    "name_en": "Jasmine Green Tea",
+    "category": ["green", "scented"],
+    "flavor_primary": "floral",
+    "created_at": "2026-09-15T08:28:55.568Z",
+    "updated_at": "2026-09-15T08:28:55.568Z"
+  },
+  {
+    "id": 3,
+    "name_en": "Tieguanyin",
+    "category": ["oolong"],
+    "flavor_primary": "floral",
+    "created_at": "2026-09-15T08:28:55.574Z",
+    "updated_at": "2026-09-15T08:28:55.574Z"
+  }
+]
+```
  
 ## Tea Object Structure
  
