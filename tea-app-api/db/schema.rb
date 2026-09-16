@@ -10,9 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_15_080425) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_16_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "brands", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "menu_items", force: :cascade do |t|
+    t.bigint "brand_id", null: false
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.bigint "tea_id"
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_menu_items_on_brand_id"
+    t.index ["tea_id"], name: "index_menu_items_on_tea_id"
+  end
+
+  create_table "shops", force: :cascade do |t|
+    t.string "address", null: false
+    t.bigint "brand_id", null: false
+    t.datetime "created_at", null: false
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_shops_on_brand_id"
+  end
 
   create_table "tea_requests", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -46,5 +73,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_15_080425) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "menu_items", "brands"
+  add_foreign_key "menu_items", "teas"
+  add_foreign_key "shops", "brands"
   add_foreign_key "tea_requests", "users"
 end
