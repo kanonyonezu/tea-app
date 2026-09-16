@@ -25,6 +25,42 @@ Most endpoints require a JWT Bearer token, obtained via the login endpoint.
 | GET | `/api/v1/recommendations/:id` | Get a single recommendation by ID |
  
 ---
+
+## GET `/api/v1/teas`
+ 
+Returns a list of all available teas.
+ 
+**Headers**
+ 
+| Key | Value |
+|-----|-------|
+| Authorization | `Bearer <JWT_TOKEN>` |
+ 
+**Response**
+ 
+```json
+[
+  {
+    "id": 2,
+    "name_en": "Earl Grey",
+    "category": ["black", "flavored"],
+    "flavor_primary": "citrus",
+    "created_at": "2026-09-15T08:28:55.572Z",
+    "updated_at": "2026-09-15T08:28:55.572Z"
+  },
+  ...
+  {
+    "id": 3,
+    "name_en": "Tieguanyin",
+    "category": ["oolong"],
+    "flavor_primary": "floral",
+    "created_at": "2026-09-15T08:28:55.574Z",
+    "updated_at": "2026-09-15T08:28:55.574Z"
+  }
+]
+```
+ 
+---
  
 ## POST `/api/v1/recommendations`
  
