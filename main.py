@@ -72,6 +72,7 @@ def get_recommendations(prefs: Preferences, top_n: int = 3):
         results.append({
             "name_en": name,
             "name_zh": row["name_zh"],
+            "category": row["category"],
             "description_brief": row["description_brief"],
             "flavor_primary": row["flavor_primary"],
         })
@@ -81,4 +82,4 @@ def get_recommendations(prefs: Preferences, top_n: int = 3):
 @app.post("/api/v1/recommendations")
 def recommend(prefs: Preferences):
     recommendations = get_recommendations(prefs)
-    return {"preferences": prefs.dict(), "recommendations": recommendations}
+    return {"preferences": prefs.model_dump(), "recommendations": recommendations}

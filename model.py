@@ -64,21 +64,7 @@ final_score = 0.4 * similarities + 0.6 * flavor_scores_normalized
 # get top three
 top3_final = final_score.sort_values(ascending=False)[0:3]
 print(top3_final)
-print(similarities[top3_final.index])
-print(flavor_scores_normalized[top3_final.index])
 
 # TODO(次回続き):
-# 1. final_scoreがマイナスになるケースがある。
-#    similaritiesがマイナス(ユーザーの好みと逆方向)のとき、
-#    (1 + flavor_scores)を掛けてもマイナスのままになってしまう。
-#    → 「flavorが合っているお茶を優遇する」という意図が、
-#       similaritiesがマイナスのお茶では逆に機能してしまう可能性がある。
-#    → 対処法の候補: 
-#       a) similaritiesが低い/マイナスのお茶は、そもそも足切りする
-#       b) final_scoreの計算方法自体を見直す(例: 加重平均にする、など)
-#
-# 2. final_scoreをsort_values(ascending=False)で並べ替えて、
-#    上位3件を取り出す処理がまだ書かれていない(top3のときと同じ形)
-#
 # 3. 最終的に、上位3件のname_en, description_brief, flavor_primaryを
 #    JSON形式で出力する処理(ステップ6の最後の部分)がまだ
