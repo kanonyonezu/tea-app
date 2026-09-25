@@ -62,6 +62,26 @@ Returns a list of all available teas.
 
 ---
 
+## GETTING JWT TOKEN
+
+For development, this user is available
+
+POST `http://localhost:3000/api/v1/login`
+
+```json
+{
+  "user": {
+    "email": "test@mail.com",
+    "password": "secret"
+  }
+}
+
+```
+
+JWT is avaialable from response header to be used for other APIs
+
+---
+
 ## POST `/api/v1/recommendations`
 
 Generates tea recommendations based on the user's stated preferences.
@@ -85,19 +105,27 @@ Generates tea recommendations based on the user's stated preferences.
 ```
 
 Caffeine level can be chosen from ["low", "moderate", "high"]
-Body can be chosen from ["A", "B", "C"]
-Flavor can be chosen from ["A", "B", "C"]
+Body can be chosen from ["medium-full", "B", "C"]
+Flavor can be chosen from ["Roasted", "Earthy", "Earthy"]
+
+**This will call the dockerized ML model and return the following**
 
 **Response**
 
 ```json
 {
-  "id": 3,
-  "user_id": 1,
-  "tea_id": [1, 3],
+{
+  "id": 7,
+  "user_id": 2,
+  "tea_id": [
+      9,
+      10,
+      11
+  ],
   "preference": null,
-  "created_at": "2026-09-16T00:52:34.234Z",
-  "updated_at": "2026-09-16T00:52:34.234Z"
+  "created_at": "2026-09-25T05:37:24.542Z",
+  "updated_at": "2026-09-25T05:37:24.542Z"
+}
 }
 ```
 
