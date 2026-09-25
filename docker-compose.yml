@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: ./tea-app-api
+    env_file: ./tea-app-api/.env
+    environment:
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@db:5432/tea_app_api_development
+    volumes:
+      - ./tea-app-api:/backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    command: bash -c "bin/rails db:prepare && bin/rails server -b 0.0.0.0"
+
+  frontend:
+    build: ./tea-app-frontend
+    environment:
+      API_PROXY_TARGET: http://api:3000
+    volumes:
+      - ./tea-app-frontend:/frontend
+      - /frontend/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
