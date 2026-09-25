@@ -8,7 +8,7 @@ class Api::V1::RecommendationsController < ApplicationController
     @tea_request = TeaRequest.new(
       user: current_user
     )
-    response = Faraday.post("http://localhost:8000/api/v1/recommendations") do |req|
+    response = Faraday.post("http://host.docker.internal:8000/api/v1/recommendations") do |req|
       req.headers["Content-Type"] = "application/json"
       req.body = tea_request_params.to_json
     end
