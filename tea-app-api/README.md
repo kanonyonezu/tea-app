@@ -1,19 +1,19 @@
 # Tea Recommendation API
- 
+
 ## Overview
- 
+
 This API allows users to log in, browse available teas, and receive personalized tea recommendations based on their preferences.
- 
+
 ## Authentication
- 
+
 Most endpoints require a JWT Bearer token, obtained via the login endpoint.
- 
+
 **In Postman:**
 1. Go to the **Authorization** tab
 2. Set **Auth Type** to `Bearer Token`
 3. Paste the token into the field
 ## Endpoints
- 
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/v1/login` | Log in and receive a JWT token |
@@ -23,21 +23,21 @@ Most endpoints require a JWT Bearer token, obtained via the login endpoint.
 | GET | `/api/v1/teas/:id` | Get a single tea by ID |
 | POST | `/api/v1/recommendations` | Create a tea recommendation based on preferences |
 | GET | `/api/v1/recommendations/:id` | Get a single recommendation by ID |
- 
+
 ---
 
 ## GET `/api/v1/teas`
- 
+
 Returns a list of all available teas.
- 
+
 **Headers**
- 
+
 | Key | Value |
 |-----|-------|
 | Authorization | `Bearer <JWT_TOKEN>` |
- 
+
 **Response**
- 
+
 ```json
 [
   {
@@ -59,33 +59,37 @@ Returns a list of all available teas.
   }
 ]
 ```
- 
+
 ---
- 
+
 ## POST `/api/v1/recommendations`
- 
+
 Generates tea recommendations based on the user's stated preferences.
- 
+
 **Headers**
- 
+
 | Key | Value |
 |-----|-------|
 | Authorization | `Bearer <JWT_TOKEN>` |
- 
+
 **Request Body**
- 
+
 ```json
 {
   "preferences": {
-    "mood": ["moodA", "moodB"],
-    "flavor": ["floral"],
-    "sweetness": 0.5
+      "caffeine": "high",
+      "body": "medium-full",
+      "flavor": ["Roasted", "Earthy"]
   }
 }
 ```
- 
+
+Caffeine level can be chosen from ["low", "moderate", "high"]
+Body can be chosen from ["A", "B", "C"]
+Flavor can be chosen from ["A", "B", "C"]
+
 **Response**
- 
+
 ```json
 {
   "id": 3,
@@ -96,25 +100,25 @@ Generates tea recommendations based on the user's stated preferences.
   "updated_at": "2026-09-16T00:52:34.234Z"
 }
 ```
- 
+
 ---
 
 ## GET `/api/v1/recommendations/:id`
- 
+
 Returns the tea(s) associated with a given recommendation ID.
- 
+
 **Headers**
- 
+
 | Key | Value |
 |-----|-------|
 | Authorization | `Bearer <JWT_TOKEN>` |
- 
+
 **Example**
- 
+
 `GET /api/v1/recommendations/1`
- 
+
 **Response**
- 
+
 ```json
 [
   {
@@ -135,9 +139,9 @@ Returns the tea(s) associated with a given recommendation ID.
   }
 ]
 ```
- 
+
 ## Tea Object Structure
- 
+
 ```json
 {
   "id": 1,
@@ -148,7 +152,7 @@ Returns the tea(s) associated with a given recommendation ID.
   "updated_at": "2026-09-15T08:28:55.568Z"
 }
 ```
- 
+
 | Field | Type | Description |
 |-------|------|-------------|
 | `id` | integer | Unique tea identifier |
@@ -157,4 +161,3 @@ Returns the tea(s) associated with a given recommendation ID.
 | `flavor_primary` | string | Dominant flavor profile |
 | `created_at` | datetime | Record creation timestamp |
 | `updated_at` | datetime | Record last-updated timestamp |
-
