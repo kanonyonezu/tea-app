@@ -56,6 +56,7 @@ def get_recommendations(prefs: Preferences, top_n: int = 3):
     flavor_scores = np.array(
         [sum(tea.count(c) for c in flavor_input) for tea in all_categories]
     )
+    #print("flavor_scores:", flavor_scores)
     max_score = flavor_scores.max() if flavor_scores.max() > 0 else 1
     flavor_scores_normalized = flavor_scores / max_score
 
@@ -77,7 +78,6 @@ def get_recommendations(prefs: Preferences, top_n: int = 3):
             "flavor_primary": row["flavor_primary"],
         })
     return results
-
 
 @app.post("/api/v1/recommendations")
 def recommend(prefs: Preferences):
