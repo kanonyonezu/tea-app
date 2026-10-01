@@ -6,6 +6,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  ml:
+    build: ./tea-app-ml
+    ports:
+      - "8000:8000"
+
   api:
     build: ./tea-app-api
     env_file: ./tea-app-api/.env
@@ -17,6 +22,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - ml #added ml
     command: bash -c "bin/rails db:prepare && bin/rails server -b 0.0.0.0"
 
   frontend:
