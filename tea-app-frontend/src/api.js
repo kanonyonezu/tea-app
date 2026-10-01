@@ -1,3 +1,4 @@
+const API_URL = "http://localhost:3000";
 const TOKEN_KEY = "token";
 const LAST_RECOMMENDATION_KEY = "lastRecommendationId";
 
@@ -23,7 +24,7 @@ async function request(path, options = {}) {
     headers.Authorization = token;
   }
 
-  const response = await fetch(`/api/v1${path}`, { ...options, headers });
+  const response = await fetch(`${API_URL}/api/v1${path}`, { ...options, headers });
 
   if (response.status === 401) {
     localStorage.removeItem(TOKEN_KEY);
@@ -37,7 +38,7 @@ async function request(path, options = {}) {
 }
 
 export async function login(email, password) {
-  const response = await fetch("/api/v1/login", {
+  const response = await fetch(`${API_URL}/api/v1/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -56,7 +57,7 @@ export async function logout() {
   const token = getToken();
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(LAST_RECOMMENDATION_KEY);
-  await fetch("/api/v1/logout", {
+  await fetch(`${API_URL}/api/v1/logout`, {
     method: "DELETE",
     headers: { Authorization: token },
   }).catch(() => {});
