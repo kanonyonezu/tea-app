@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "";
 const TOKEN_KEY = "token";
 const LAST_RECOMMENDATION_KEY = "lastRecommendationId";
 
