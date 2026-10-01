@@ -5,6 +5,10 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  ml:
+    build: ./tea-app-ml
+    ports:
+      - "8000:8000"
 
   api:
     build: ./tea-app-api
@@ -30,6 +34,7 @@ services:
       - "5173:5173"
     depends_on:
       - api
+
 
 volumes:
   postgres_data:
