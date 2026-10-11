@@ -60,12 +60,24 @@ def get_recommendations(prefs: Preferences, top_n: int = 3):
     max_score = flavor_scores.max() if flavor_scores.max() > 0 else 1
     flavor_scores_normalized = flavor_scores / max_score
 
+    # Min-max normalize similarities to the 0-1 range.
+    # Raw cosine similarity only spans about -0.37 to 0.31 here,
+    # while flavor scores span 0 to 1, so flavor dominated the ranking
+    # no matter how the weights were changed.
+    # Putting both on the same scale lets the weights actually work.
+    sim_range = similarities.max() - similarities.min()
+    sim_norm = (similarities - similarities.min()) / (sim_range if sim_range > 0 else 1)
+
     final_score = (
-        prefs.caffeine_body_weight * similarities
+        prefs.caffeine_body_weight * sim_norm
         + prefs.flavor_weight * pd.Series(flavor_scores_normalized, index=scaled_df.index)
     )
 
     top = final_score.sort_values(ascending=False)[:top_n]
+    #print("top3 sim:", similarities[top.index].values)
+    #print("top3 flavor:", flavor_scores_normalized[final_score.index.get_indexer(top.index)])
+    #print("sim max/min:", similarities.max(), similarities.min())
+    #print("top3 sim_norm:", sim_norm[top.index].values)
 
     results = []
     for name in top.index:
